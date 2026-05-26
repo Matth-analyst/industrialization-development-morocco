@@ -1,0 +1,23 @@
+================================================================================
+DÉTECTION DE LA MULTICOLINÉARITÉ (VIF)
+================================================================================
+
+Variables analysées: ['ln_iva', 'ln_credit', 'ln_dep', 'ln_ide', 'ln_tcer', 'ln_ipc']
+Nombre d'observations: 35
+Nombre de variables: 6
+
+--------------------------------------------------------------------------------
+ln_iva               VIF =  9064.65  ❌ Multicolinéarité sévère (nécessite correction)
+ln_credit            VIF =   473.13  ❌ Multicolinéarité sévère (nécessite correction)
+ln_dep               VIF =  2376.44  ❌ Multicolinéarité sévère (nécessite correction)
+ln_ide               VIF =     3.03  ✅ Corrélation modérée (acceptable)
+ln_tcer              VIF = 13473.34  ❌ Multicolinéarité sévère (nécessite correction)
+ln_ipc               VIF =  3978.22  ❌ Multicolinéarité sévère (nécessite correction)
+--------------------------------------------------------------------------------
+
+⚠️ Variables avec VIF ≥ 10:
+   - ln_iva: VIF = 9064.65
+   - ln_credit: VIF = 473.13
+   - ln_dep: VIF = 2376.44
+   - ln_tcer: VIF = 13473.34
+   - ln_ipc: VIF = 3978.22

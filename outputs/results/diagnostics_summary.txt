@@ -1,0 +1,9 @@
+================================================================================
+RÉSUMÉ DES TESTS DE DIAGNOSTIC
+================================================================================
+
+autocorrelation: {'lm_stat': np.float64(31.442898109092923), 'p_value': np.float64(1.4868303859988304e-07), 'autocorrelation': True}
+heteroscedasticity: {'bp_lm': np.float64(28.79715197585567), 'bp_pvalue': np.float64(0.370803684144363), 'white_lm': np.float64(32.0), 'white_pvalue': np.float64(0.4167440299455431), 'heteroscedasticity': False}
+normality: {'jb_stat': np.float64(1.1234857343018365), 'p_value': np.float64(0.5702143893796392), 'normality': True}
+reset: {'f_stat': np.float64(0.6167874482920997), 'p_value': np.float64(0.6185104919365587), 'reset_valid': True}
+cusum: {'cusum_stable': np.True_, 'cusumsq_stable': np.True_}

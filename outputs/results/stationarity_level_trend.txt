@@ -1,0 +1,237 @@
+================================================================================
+TESTS DE RACINE UNITAIRE
+Date: 2026-05-14 21:04:24
+================================================================================
+
+------------------------------------------------------------
+Variable: pibhab
+Test: ADF
+Spécification: ct
+Statistique: -0.970341
+P-value: 0.947977
+
+Valeurs critiques:
+  1%: -4.2849
+  5%: -3.5630
+  10%: -3.2153
+
+Conclusion: Non stationnaire (H0 non rejetée)
+
+------------------------------------------------------------
+Variable: pibhab
+Test: KPSS
+Spécification: ct
+Statistique: 0.150242
+P-value: 0.046465
+
+Valeurs critiques:
+  10%: 0.1190
+  5%: 0.1460
+  2.5%: 0.1760
+  1%: 0.2160
+
+Conclusion: Non stationnaire (H0 rejetée)
+
+------------------------------------------------------------
+Variable: iva
+Test: ADF
+Spécification: ct
+Statistique: -1.562707
+P-value: 0.806695
+
+Valeurs critiques:
+  1%: -4.2530
+  5%: -3.5486
+  10%: -3.2071
+
+Conclusion: Non stationnaire (H0 non rejetée)
+
+------------------------------------------------------------
+Variable: iva
+Test: KPSS
+Spécification: ct
+Statistique: 0.204202
+P-value: 0.014424
+
+Valeurs critiques:
+  10%: 0.1190
+  5%: 0.1460
+  2.5%: 0.1760
+  1%: 0.2160
+
+Conclusion: Non stationnaire (H0 rejetée)
+
+------------------------------------------------------------
+Variable: pop
+Test: ADF
+Spécification: ct
+Statistique: -0.647916
+P-value: 0.976355
+
+Valeurs critiques:
+  1%: -4.2971
+  5%: -3.5686
+  10%: -3.2184
+
+Conclusion: Non stationnaire (H0 non rejetée)
+
+------------------------------------------------------------
+Variable: pop
+Test: KPSS
+Spécification: ct
+Statistique: 0.117923
+P-value: 0.100000
+
+Valeurs critiques:
+  10%: 0.1190
+  5%: 0.1460
+  2.5%: 0.1760
+  1%: 0.2160
+
+Conclusion: Stationnaire (H0 non rejetée)
+
+------------------------------------------------------------
+Variable: credit
+Test: ADF
+Spécification: ct
+Statistique: -0.526928
+P-value: 0.982340
+
+Valeurs critiques:
+  1%: -4.2530
+  5%: -3.5486
+  10%: -3.2071
+
+Conclusion: Non stationnaire (H0 non rejetée)
+
+------------------------------------------------------------
+Variable: credit
+Test: KPSS
+Spécification: ct
+Statistique: 0.223470
+P-value: 0.010000
+
+Valeurs critiques:
+  10%: 0.1190
+  5%: 0.1460
+  2.5%: 0.1760
+  1%: 0.2160
+
+Conclusion: Non stationnaire (H0 rejetée)
+
+------------------------------------------------------------
+Variable: dep
+Test: ADF
+Spécification: ct
+Statistique: -2.686893
+P-value: 0.241565
+
+Valeurs critiques:
+  1%: -4.2735
+  5%: -3.5579
+  10%: -3.2124
+
+Conclusion: Non stationnaire (H0 non rejetée)
+
+------------------------------------------------------------
+Variable: dep
+Test: KPSS
+Spécification: ct
+Statistique: 0.133083
+P-value: 0.073920
+
+Valeurs critiques:
+  10%: 0.1190
+  5%: 0.1460
+  2.5%: 0.1760
+  1%: 0.2160
+
+Conclusion: Stationnaire (H0 non rejetée)
+
+------------------------------------------------------------
+Variable: ide
+Test: ADF
+Spécification: ct
+Statistique: -2.062261
+P-value: 0.567154
+
+Valeurs critiques:
+  1%: -4.2629
+  5%: -3.5531
+  10%: -3.2096
+
+Conclusion: Non stationnaire (H0 non rejetée)
+
+------------------------------------------------------------
+Variable: ide
+Test: KPSS
+Spécification: ct
+Statistique: 0.218926
+P-value: 0.010000
+
+Valeurs critiques:
+  10%: 0.1190
+  5%: 0.1460
+  2.5%: 0.1760
+  1%: 0.2160
+
+Conclusion: Non stationnaire (H0 rejetée)
+
+------------------------------------------------------------
+Variable: tcer
+Test: ADF
+Spécification: ct
+Statistique: -2.228643
+P-value: 0.473749
+
+Valeurs critiques:
+  1%: -4.2530
+  5%: -3.5486
+  10%: -3.2071
+
+Conclusion: Non stationnaire (H0 non rejetée)
+
+------------------------------------------------------------
+Variable: tcer
+Test: KPSS
+Spécification: ct
+Statistique: 0.126636
+P-value: 0.085859
+
+Valeurs critiques:
+  10%: 0.1190
+  5%: 0.1460
+  2.5%: 0.1760
+  1%: 0.2160
+
+Conclusion: Stationnaire (H0 non rejetée)
+
+------------------------------------------------------------
+Variable: ipc
+Test: ADF
+Spécification: ct
+Statistique: -3.254428
+P-value: 0.074091
+
+Valeurs critiques:
+  1%: -4.2629
+  5%: -3.5531
+  10%: -3.2096
+
+Conclusion: Non stationnaire (H0 non rejetée)
+
+------------------------------------------------------------
+Variable: ipc
+Test: KPSS
+Spécification: ct
+Statistique: 0.166893
+P-value: 0.032590
+
+Valeurs critiques:
+  10%: 0.1190
+  5%: 0.1460
+  2.5%: 0.1760
+  1%: 0.2160
+
+Conclusion: Non stationnaire (H0 rejetée)
+
