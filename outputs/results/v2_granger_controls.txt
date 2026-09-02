@@ -1,0 +1,9 @@
+Comparaison bivarié vs. contrôlé (DEP, IDE, TCER) :
+
+Sens                            Retard  p bivarié   p avec contrôles
+IVA -> PIB                           1     0.7979             0.8364
+PIB -> IVA                           1     0.0794             0.5038
+IVA -> PIB                           2     0.7090             0.8717
+PIB -> IVA                           2     0.0316             0.5660
+
+Conclusion : la causalité inversée PIB->IVA détectée en bivarié au retard 2 (p=0.032) disparaît complètement une fois contrôlée pour les dépenses publiques, l'IDE et le TCER (p=0.566) -- les mêmes variables déjà présentes dans le modèle ARDL principal. Ce résultat est cohérent avec un artefact de variable omise dans le test bivarié plutôt qu'avec une causalité réelle. Combiné à l'absence de survie sous correction pour tests multiples (3ter.1), ce résultat ne doit plus être présenté comme la limite la plus substantielle de l'étude.

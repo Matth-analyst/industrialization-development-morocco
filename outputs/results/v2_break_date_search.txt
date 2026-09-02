@@ -1,0 +1,32 @@
+ annee_rupture        F
+          1997 9.245407
+          1998 7.881599
+          1996 7.427470
+          2011 4.264184
+          2000 4.200149
+          1999 3.844983
+          2001 3.841872
+          2012 3.683350
+          2013 3.309533
+          2014 2.894194
+          2010 2.800557
+          2009 2.228231
+          2019 1.925082
+          2004 1.884345
+          2005 1.867022
+          2015 1.848552
+          2018 1.797644
+          2002 1.792647
+          2003 1.775818
+          2017 1.698234
+          2016 1.690029
+          2006 1.320938
+          2007 1.310274
+          2008 1.133448
+
+Meilleure date scannée : 1997, F=9.245
+Rang de 2005 parmi 24 dates candidates : 15
+sup-F observé : 9.245
+p-value du sup-F test (Quandt-Andrews, corrigée par bootstrap pour la recherche sur toutes les dates candidates) : 0.0335
+
+Conclusion : il existe bien une instabilité structurelle globale (sup-F significatif, p=0.0335), mais 2005 n'est pas la date la mieux supportée par les données -- elle se classe 15e sur 24. La date optimale (1997) précède le Plan Émergence (2005-2015) et coïncide plutôt avec la fin du Programme d'ajustement structurel et l'accord de libre-échange Maroc-UE (1996). L'attribution causale au Plan Émergence au §3bis.4 n'est donc pas testée contre les dates alternatives et doit être révisée.

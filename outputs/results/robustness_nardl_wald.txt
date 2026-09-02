@@ -1,0 +1,31 @@
+================================================================================
+SENSIBILITÉ DU TEST DE WALD (ASYMÉTRIE NARDL) À LA COLINÉARITÉ
+================================================================================
+
+Corrélation entre iva_pos et iva_neg (sommes cumulées) : -0.9292
+Covariance entre les coefficients estimés (iva_pos, iva_neg) : -2.905814e-03
+Condition number du modèle NARDL (rappel, section 3.7) : 7.61e+03
+
+--- Comparaison : formule originale (nardl_model.py) vs. test F correct ---
+
+La fonction wald_asymmetry_test() de nardl_model.py calcule la variance de la
+différence (somme_pos - somme_neg) en supposant explicitement l'indépendance
+entre iva_pos et iva_neg (var_diff = var(pos) + var(neg), sans terme de
+covariance — voir le commentaire 'on suppose indépendance pour simplification'
+dans le code source). Cette hypothèse est incorrecte : le criblage de
+multicolinéarité (section 3.7) montre que ces deux variables sont fortement
+corrélées (r=-0.93), donc leur covariance n'est pas nulle et ne peut être
+ignorée sans biaiser l'écart-type de la différence.
+
+Méthode                                             t / F     p-value
+--------------------------------------------------------------------------------
+Formule originale (indépendance supposée)          3.4547      0.0020
+Test F correct (covariance incluse)               10.9614      0.0028
+
+Conclusion centrale : la covariance entre iva_pos et iva_neg est négative (r=-0.93 entre les variables elles-mêmes, covariance des coefficients =-2.91e-03). Contrairement à l'attente initiale (une covariance non nulle ignorée fait en général sous-estimer l'écart-type et gonfler artificiellement la significativité), la correction va ici dans le sens inverse : le test F correctement spécifié (qui intègre cette covariance négative) reste hautement significatif (p=0.0028), du même ordre que la formule originale (p=0.0020). Le résultat d'asymétrie du chapitre 3 n'est donc pas un artefact de la formule simplifiée utilisée dans `nardl_model.py` : la correction méthodologique aurait pu changer la conclusion, mais dans ce cas précis, elle ne le fait pas.
+
+--- Confirmation par bootstrap résiduel (3000 réplications, test F correct) ---
+Proportion de réplications bootstrap où le test F correct reste significatif à 5% : 95.0%
+Distribution des p-values bootstrap : médiane=0.0006, P90=0.0232
+
+Le bootstrap confirme la robustesse du résultat : 95.0% des réplications rejettent la symétrie à 5% avec le test correctement spécifié. L'asymétrie de l'effet de la VA manufacturière (section 3.7) peut donc être maintenue comme un résultat robuste — la vérification demandée (point 5 de la relecture critique) ne l'infirme pas, elle la conforte, tout en corrigeant au passage une erreur méthodologique réelle dans le calcul original de la variance (l'hypothèse d'indépendance, fausse mais qui ne modifie pas la conclusion qualitative ici).

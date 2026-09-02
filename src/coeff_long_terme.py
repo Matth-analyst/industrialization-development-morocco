@@ -43,6 +43,14 @@ def calculate_long_term_coefficients(model_results, p, q, X_cols):
     
     if denominator <= 0:
         print("\n⚠️ Attention: Dénominateur négatif ou nul. Vérifiez la stabilité du modèle.")
+    if abs(denominator) < 0.05:
+        print(f"\n⚠️⚠️ Dénominateur quasi nul ({denominator:.4f}): la somme des coefficients "
+              "des retards de y est très proche de 1 (racine quasi unitaire dans la dynamique "
+              "de court terme). Les coefficients de long terme obtenus par division sont donc "
+              "numériquement instables (ils explosent) et NE DOIVENT PAS être interprétés comme "
+              "des élasticités de long terme fiables. Ceci est cohérent avec un test des bornes "
+              "ne rejetant pas l'absence de cointégration (cf. outputs/results/bounds_test.txt): "
+              "la notion même de \"relation de long terme\" n'est pas solidement établie ici.")
     
     # 2. Calculer les coefficients de long terme pour chaque variable exogène
     lt_coefficients = {}
@@ -131,9 +139,50 @@ def save_long_term_results(lt_coefficients, lt_pvalues, denominator, output_path
         f.write("COEFFICIENTS DE LONG TERME\n")
         f.write("="*80 + "\n\n")
         f.write(f"Dénominateur (1 - Σ retards de y): {denominator:.6f}\n\n")
+        if abs(denominator) < 0.05:
+            f.write(
+                "⚠️⚠️ AVERTISSEMENT: dénominateur quasi nul → la somme des coefficients des "
+                "retards de y est très proche de 1. Les coefficients de long terme ci-dessous "
+                "sont numériquement instables et ne doivent pas être interprétés comme des "
+                "élasticités de long terme fiables. Voir outputs/results/bounds_test.txt: le "
+                "test des bornes ne rejette pas H0 (pas de relation de cointégration établie), "
+                "ce qui est cohérent avec cette instabilité.\n\n"
+            )
         f.write(results_df.to_string(index=False))
         f.write("\n\n" + "="*80 + "\n")
         f.write("Significativité: *** p<0.01, ** p<0.05, * p<0.10\n")
+
+        # Discussion explicite des signes économiquement contestables, plutôt que de
+        # laisser un coefficient contre-intuitif sans commentaire dans les résultats.
+        EXPECTED_SIGNS = {
+            "ln_iva": ("+", "l'industrialisation manufacturière est théoriquement associée "
+                             "positivement au PIB par habitant (littérature sur la transformation "
+                             "structurelle, ex. Rodrik 2016)"),
+            "ln_dep": (None, "le signe attendu des dépenses publiques est ambigu a priori "
+                              "(effet d'éviction possible vs. investissement public productif)"),
+            "ln_ide": ("+", "l'IDE est généralement attendu positif via transfert de capital, "
+                             "technologie et emploi"),
+            "ln_tcer": (None, "le signe du taux de change réel dépend de la structure "
+                               "exportatrice/importatrice du pays"),
+        }
+        flagged = []
+        for var, coef in lt_coefficients.items():
+            expected, note = EXPECTED_SIGNS.get(var, (None, ""))
+            actual_sign = "+" if coef > 0 else "-"
+            if expected is not None and actual_sign != expected:
+                flagged.append((var, coef, note))
+
+        if flagged:
+            f.write("\n" + "-"*80 + "\n")
+            f.write("SIGNES ÉCONOMIQUEMENT CONTRE-INTUITIFS À DISCUTER DANS LE RAPPORT\n")
+            f.write("-"*80 + "\n")
+            for var, coef, note in flagged:
+                label = config.VAR_LABELS.get(var.replace("ln_", ""), var)
+                f.write(f"- {label}: coefficient de long terme = {coef:.4f} "
+                        f"(signe {'positif' if coef > 0 else 'négatif'} inattendu). {note}.\n"
+                        f"  Ne pas laisser ce résultat sans commentaire: discuter les explications "
+                        f"possibles (multicolinéarité résiduelle, instabilité d'échantillon, "
+                        f"effet de composition, causalité inverse) plutôt que de l'ignorer.\n")
     
     print(f"\nRésultats sauvegardés dans: {output_path}")
     print(f"Version texte dans: {txt_path}")

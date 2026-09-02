@@ -1,0 +1,21 @@
+================================================================================
+TEST DES BORNES (BOUNDS TEST) DE PESARAN, SHIN & SMITH (2001)
+================================================================================
+
+Modèle: ARDL(2,0) — forme ECM
+Variables de niveau testées sous H0 (coefficients nuls): ['y_L1', 'ln_iva_L1', 'ln_dep_L1', 'ln_ide_L1', 'ln_tcer_L1']
+Observations utilisées: 33
+Nombre de régresseurs de long terme (k, hors y): 4
+
+Statistique F: 1.7603
+P-value (test F conjoint, référence asymptotique chi2/F standard): 0.1563
+
+Valeurs critiques (Pesaran, Shin & Smith 2001, Table CI(iii), constante non contrainte, sans tendance):
+  Seuil 10%: borne I(0)=2.45  borne I(1)=3.52  → F en-dessous de la borne I(0) → pas de cointégration
+  Seuil 5%: borne I(0)=2.86  borne I(1)=4.01  → F en-dessous de la borne I(0) → pas de cointégration
+  Seuil 1%: borne I(0)=3.74  borne I(1)=5.06  → F en-dessous de la borne I(0) → pas de cointégration
+
+--------------------------------------------------------------------------------
+MISE EN GARDE
+--------------------------------------------------------------------------------
+Les valeurs critiques utilisées sont asymptotiques (grand échantillon). Avec n=33 observations effectives, elles ne sont qu'une approximation: des tables en petit échantillon (ex. Narayan, 2005) seraient plus appropriées mais ne sont pas reproduites ici. Ce test doit donc être lu comme un indice et non comme une preuve formelle de cointégration.

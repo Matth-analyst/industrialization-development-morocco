@@ -26,16 +26,23 @@ def generate_autocorrelation_justification(lm_stat, p_value, dw_stat, n_obs, n_p
     - n_params: nombre de paramètres du modèle
     """
     
-    # Déterminer le niveau d'autocorrélation
-    if lm_stat < 5:
+    # CORRECTION: la classification se fondait sur des seuils arbitraires appliqués
+    # directement à la statistique LM (dont l'échelle dépend de n et des ddl), ce qui
+    # pouvait qualifier de "modérée" une autocorrélation en réalité très significative.
+    # On classe désormais sur la base de la p-value du test, seule quantité comparable
+    # d'une spécification à l'autre.
+    if p_value >= 0.10:
         niveau = "faible"
-        justification = "négligeable et ne remet pas en cause la validité du modèle"
-    elif lm_stat < 15:
+        justification = "non significative et ne remet pas en cause la validité du modèle"
+    elif p_value >= 0.01:
         niveau = "modérée"
-        justification = "modérée mais corrigée par la méthode de Newey-West"
+        justification = "statistiquement significative mais d'ampleur limitée; atténuée par Newey-West"
     else:
         niveau = "élevée"
-        justification = "élevée, ce qui constitue une limite à prendre en compte"
+        justification = (
+            "fortement significative (p < 0.01), ce qui constitue une limite réelle du modèle "
+            "et pas seulement un artefact à corriger cosmétiquement par HAC"
+        )
     
     # Interprétation de Durbin-Watson
     if 1.8 < dw_stat < 2.2:
@@ -48,44 +55,61 @@ def generate_autocorrelation_justification(lm_stat, p_value, dw_stat, n_obs, n_p
         dw_interpretation = "légèrement supérieur à 2, suggérant une autocorrélation négative légère"
         dw_conclusion = "complète"
     
+    # Texte conditionnel selon la sévérité réelle (p-value), pour éviter la conclusion
+    # rassurante par défaut ("ne remet pas en cause la validité") même quand LM est
+    # fortement significatif — c'est l'erreur corrigée ici.
+    if niveau == "élevée":
+        ampleur_txt = "d'ampleur substantielle et ne peut être écartée comme un artefact mineur"
+        remede_txt = (
+            "La correction Newey-West (HAC) restaure la validité asymptotique des tests "
+            "d'hypothèse, mais ne corrige pas la source de l'autocorrélation elle-même "
+            "(probable mauvaise spécification dynamique ou omission de variable). "
+            "Ce point doit être présenté comme une limite explicite de l'étude, "
+            "et non comme un problème résolu."
+        )
+        conclusion_txt = (
+            f"Cette autocorrélation {niveau} constitue une limite réelle de l'étude, à mentionner "
+            "explicitement dans la section \"Limites\" plutôt qu'à minimiser."
+        )
+    else:
+        ampleur_txt = "reste d'ampleur limitée (loin des valeurs extrêmes observées dans des spécifications mal définies)"
+        remede_txt = (
+            "Pour y remédier, nous avons appliqué la correction de Newey-West (HAC), produisant "
+            "des erreurs-types robustes à l'autocorrélation et à l'hétéroscédasticité."
+        )
+        conclusion_txt = f"Cette autocorrélation {niveau} ne remet pas en cause la validité globale des conclusions de l'étude."
+
     # Générer le texte LaTeX
     latex_text = f"""
 \\subsection{{Autocorrélation résiduelle}}
 
 Le test de Breusch-Godfrey révèle une autocorrélation {niveau} des résidus 
-(LM = {lm_stat:.2f}, p = {p_value:.4f}). Cette autocorrélation, bien que 
-statistiquement significative, reste d'ampleur limitée (loin des valeurs 
-extrêmes observées dans des spécifications mal définies). 
+(LM = {lm_stat:.2f}, p = {p_value:.4f}). Cette autocorrélation {ampleur_txt}. 
 
 La statistique de Durbin-Watson ({dw_stat:.3f}) est {dw_interpretation}, ce qui 
-{dw_conclusion} le diagnostic d'une autocorrération {niveau}.
+{dw_conclusion} le diagnostic d'une autocorrélation {niveau}.
 
-Plusieurs facteurs expliquent cette autocorrélation résiduelle :
+Plusieurs facteurs peuvent expliquer cette autocorrélation résiduelle :
 \\begin{{itemize}}
     \\item La taille modeste de l'échantillon ({n_obs} observations après prise en compte des retards) ;
     \\item La nature intrinsèquement dynamique de la relation entre industrialisation et développement économique ;
-    \\item Le nombre relativement élevé de paramètres ({n_params}) par rapport aux observations.
+    \\item Le nombre de paramètres ({n_params}) relativement élevé par rapport aux observations.
 \\end{{itemize}}
 
-Pour y remédier, nous avons :
-\\begin{{enumerate}}
-    \\item Augmenté le nombre de retards (p=2, q=2) pour mieux capturer la dynamique ;
-    \\item Appliqué la correction de Newey-West (HAC) avec 2 retards, produisant des erreurs-types robustes à l'autocorrélation et à l'hétéroscédasticité.
-\\end{{enumerate}}
+{remede_txt}
 
 Conformément à la littérature (Pesaran \\& Shin, 1999 ; Wooldridge, 2016), 
-l'estimateur ARDL reste convergent et les coefficients non biaisés en présence 
-d'une autocorrélation {niveau}. Seule la précision des tests d'hypothèse est 
-théoriquement affectée, ce que la correction HAC permet de surmonter.
+l'estimateur ARDL reste convergent en présence d'autocorrélation, mais cette 
+propriété est asymptotique : avec n={n_obs}, elle doit être invoquée avec prudence, 
+pas comme une garantie automatique.
 
-Ainsi, cette autocorrélation {niveau} ne remet pas en cause la validité globale 
-des conclusions de l'étude.
+{conclusion_txt}
 """
     
     # Version courte pour le résumé
     short_text = f"""
 ================================================================================
-AUTOCORRÉLATION MODÉRÉE - JUSTIFICATION POUR LE RAPPORT
+AUTOCORRÉLATION {niveau.upper()} - JUSTIFICATION POUR LE RAPPORT
 ================================================================================
 
 Test de Breusch-Godfrey:     LM = {lm_stat:.2f}, p = {p_value:.4f}
@@ -138,14 +162,21 @@ def run_autocorrelation_justification(best_model=None, df_log=None):
     if best_model is not None:
         # Extraire Durbin-Watson du modèle
         from statsmodels.stats.stattools import durbin_watson
+        from statsmodels.stats.diagnostic import acorr_breusch_godfrey
         dw_stat = durbin_watson(best_model.resid)
         n_obs = int(best_model.nobs)
         n_params = len(best_model.params)
-        
-        # Pour LM, tu dois l'avoir sauvegardé ou le recalculer
-        # Valeur typique de ton modèle
-        lm_stat = 11.59
-        p_value = 0.003
+
+        # CORRECTION: la statistique LM était auparavant codée en dur (valeur figée
+        # de 11.59 / p=0.003), sans lien avec le modèle réellement estimé — ce qui
+        # produisait un texte "modéré" en contradiction avec diagnostics_summary.txt
+        # (LM=31.4, p<0.001, nlags=2) généré par le même run. On recalcule ici le
+        # test de Breusch-Godfrey directement sur le modèle fourni, avec le même
+        # nombre de retards (nlags=2) que src/diagnostics.py, pour garantir la
+        # cohérence entre les deux fichiers de sortie.
+        bg_result = acorr_breusch_godfrey(best_model, nlags=2)
+        lm_stat = float(bg_result[0])
+        p_value = float(bg_result[1])
     else:
         # Valeurs par défaut d'après tes résultats
         lm_stat = 11.59

@@ -1,0 +1,30 @@
+================================================================================
+TEST DE RUPTURE STRUCTURELLE EN 2005 (PLAN ÉMERGENCE)
+================================================================================
+
+Méthode : plutôt qu'un test de Chow classique (qui nécessiterait de scinder
+l'échantillon en deux sous-périodes, chacune trop courte pour estimer un
+ARDL(2,0) à 7 paramètres), nous testons la rupture par une variable
+indicatrice post-2005 et son interaction avec ln_iva, ajoutées au
+modèle complet. Ceci préserve les degrés de liberté (33 observations, 9
+paramètres, 24 ddl résiduels) tout en testant explicitement si l'effet de la
+VA manufacturière a changé après le lancement du Plan Émergence (2005).
+
+Observations : 33   Degrés de liberté résiduels : 24
+
+--- Coefficients (erreurs-types HAC) ---
+const            2.4424   se=  0.8772   p= 0.0054
+y_L1             0.3689   se=  0.0784   p= 0.0000
+y_L2             0.6075   se=  0.0539   p= 0.0000
+ln_iva          -0.3701   se=  0.1637   p= 0.0238
+ln_dep          -0.2200   se=  0.1111   p= 0.0477
+ln_ide           0.0129   se=  0.0068   p= 0.0577
+ln_tcer         -0.1135   se=  0.1920   p= 0.5543
+post            -1.4687   se=  0.4949   p= 0.0030
+iva_post         0.5245   se=  0.1799   p= 0.0036
+
+--- Test F conjoint de rupture (post=0 et iva_post=0) ---
+Statistique F : 6.9181
+P-value : 0.0042
+
+Conclusion : une rupture structurelle associée à 2005 est détectée au seuil de 5%, cohérent avec l'instabilité CUSUM identifiée en section 3.8. L'effet de la VA manufacturière sur le PIB par habitant semble avoir changé après le lancement du Plan Émergence.

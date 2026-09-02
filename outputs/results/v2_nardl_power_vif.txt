@@ -1,0 +1,14 @@
+Valeurs critiques simulées (H0 bootstrap, n=33) : F90%=2.941, F95%=4.301
+F observé : 10.961
+Puissance simulée (effet calibré sur l'estimation observée) : à 90%=0.973, à 95%=0.937
+
+VIF individuels (design NARDL complet) :
+  y_L1            VIF=     89.86
+  y_L2            VIF=     51.08
+  iva_neg         VIF=     50.02
+  iva_pos         VIF=     17.57
+  ln_tcer         VIF=      7.76
+  ln_dep          VIF=      3.62
+  ln_ide          VIF=      1.79
+
+Conclusion : la puissance du test de Wald d'asymétrie est élevée (~94% à 95%), contrairement au bounds test (36%). En revanche, la colinéarité au sein du modèle NARDL est plus étendue que ce que rapporte le §3bis.5 : les termes autorégressifs y_L1 et y_L2 ont eux-mêmes des VIF très élevés (colinéarité liée à la quasi-racine unitaire de la dynamique du PIB par habitant, cohérente avec le §3.6.1), en plus de la colinéarité connue entre iva_pos et iva_neg. Le test de Wald conjoint reste défendable, mais la lecture des coefficients individuels doit être encore plus prudente que ne le signale le rapport initial.

@@ -115,12 +115,16 @@ def estimate_nardl(df_log, max_lags=2):
                 all_vars = pd.concat([y_lags, X_lagged], axis=1).dropna()
                 y_curr = y.loc[all_vars.index]
                 
-                # Vérifier le nombre de paramètres
+                # Vérifier le nombre de paramètres — même garde-fou que le modèle ARDL
+                # principal (le seuil "n_obs - 5" laissait passer des spécifications à
+                # 17 paramètres pour 33 observations, soit 16 ddl résiduels à peine).
                 n_params = 1 + len(all_vars.columns)  # +1 pour constante
                 n_obs = len(all_vars)
+                min_df = getattr(config, "MIN_RESIDUAL_DF", 10)
                 
-                if n_params >= n_obs - 5:
-                    print(f"ARDL(p={p}, q={q}): {n_params} params, {n_obs} obs → ignoré (trop de paramètres)")
+                if (n_obs - n_params) < min_df:
+                    print(f"ARDL(p={p}, q={q}): {n_params} params, {n_obs} obs, "
+                          f"{n_obs - n_params} ddl résiduels < {min_df} → ignoré (surparamétrage)")
                     continue
                 
                 # Estimation
@@ -137,10 +141,11 @@ def estimate_nardl(df_log, max_lags=2):
                     "n_obs": n_obs
                 })
                 
-                print(f"ARDL(p={p}, q={q}): AIC={model.aic:.2f}, R²adj={model.rsquared_adj:.4f}")
+                print(f"ARDL(p={p}, q={q}): AIC={model.aic:.2f}, BIC={model.bic:.2f}, R²adj={model.rsquared_adj:.4f}")
                 
-                if model.aic < best_aic:
-                    best_aic = model.aic
+                score = model.bic if getattr(config, "LAG_CRITERION", "bic").lower() == "bic" else model.aic
+                if score < best_aic:
+                    best_aic = score
                     best_model = model
                     best_order = (p, q)
                     

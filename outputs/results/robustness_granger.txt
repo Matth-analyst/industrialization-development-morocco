@@ -1,0 +1,16 @@
+================================================================================
+TEST DE CAUSALITÉ AU SENS DE GRANGER (VARIABLES EN DIFFÉRENCE, I(0))
+================================================================================
+
+Échantillon : 34 observations (après différenciation)
+Retards testés : 1 à 2
+
+--- H0 : Δln_iva NE cause PAS Δln_pibhab au sens de Granger ---
+Retard 1 : F=0.0668, p=0.7979  → H0 non rejetée
+Retard 2 : F=0.3483, p=0.7090  → H0 non rejetée
+
+--- H0 : Δln_pibhab NE cause PAS Δln_iva au sens de Granger ---
+Retard 1 : F=3.2970, p=0.0794  → H0 non rejetée
+Retard 2 : F=3.9358, p=0.0316  → rejet H0 à 5%
+
+Avertissement : avec n≈32 observations en différence et seulement 1 à 2 retards testables, la puissance de ce test bivarié est faible, et il n'inclut pas les variables de contrôle (dépenses publiques, IDE, TCER) du modèle ARDL principal — un VAR structurel multivarié serait nécessaire pour une analyse de causalité complète, hors du périmètre de ce travail. Ce test bivarié simple sert uniquement à documenter si le sens de causalité supposé par la spécification ARDL (IVA -> PIBHAB) est au moins compatible avec les données, sans le démontrer formellement.

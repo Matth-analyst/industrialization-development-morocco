@@ -1,0 +1,28 @@
+================================================================================
+BOOTSTRAP RÉSIDUEL — ROBUSTESSE DE L'INFÉRENCE À LA NON-NORMALITÉ
+================================================================================
+
+Méthode : bootstrap résiduel non paramétrique (5000 réplications) sur le
+modèle ARDL(2,0). Les résidus estimés sont ré-échantillonnés avec remise et
+ajoutés aux valeurs ajustées pour générer des séries bootstrap ; le modèle est
+ré-estimé sur chacune. Cette méthode ne suppose pas la normalité des résidus
+(contrairement aux tests t/F usuels) et fournit donc une inférence robuste au
+rejet de la normalité constaté en section 3.8 (Jarque-Bera, p=0.004).
+
+Variable       Coef. HAC   p (HAC)            IC bootstrap 95%   p (bootstrap)
+--------------------------------------------------------------------------------
+y_L1              0.3856     0.000   [  0.1735,   0.6057]           0.000
+y_L2              0.6193     0.000   [  0.3918,   0.8424]           0.000
+ln_iva           -0.1145     0.486   [ -0.3658,   0.1447]           0.364
+ln_dep           -0.2418     0.040   [ -0.4446,  -0.0425]           0.018
+ln_ide            0.0164     0.013   [ -0.0028,   0.0353]           0.086
+ln_tcer           0.0312     0.870   [ -0.2739,   0.3444]           0.832
+
+Interprétation : les intervalles de confiance bootstrap (qui ne supposent
+pas la normalité) sont comparés aux p-values HAC (qui la supposent
+implicitement en échantillon fini). Une variable dont le bootstrap confirme
+la significativité (IC excluant 0) malgré la non-normalité des résidus peut
+être considérée comme un résultat plus solide que sa seule p-value HAC ne le
+suggère ; à l'inverse, un résultat limite en HAC (ex. p proche de 0.05) dont
+l'IC bootstrap inclut 0 doit être lu avec davantage de prudence encore que ne
+le suggérait déjà la section 3.6.

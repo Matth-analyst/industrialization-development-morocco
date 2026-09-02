@@ -1,0 +1,18 @@
+================================================================================
+TEST DE FORME FONCTIONNELLE NON LINÉAIRE (TERME QUADRATIQUE SUR ln_iva)
+================================================================================
+
+Méthode : ajout d'un terme quadratique centré (ln_iva - moyenne)² au modèle
+ARDL(2,0), en complément du test RESET déjà rapporté (section 3.8) et du test
+NARDL d'asymétrie (section 3.7). Le RESET teste une mauvaise spécification
+fonctionnelle générale ; le NARDL teste une asymétrie de signe (hausse vs
+baisse) ; ce test teste spécifiquement une non-linéarité de niveau (rendements
+croissants ou décroissants de la VA manufacturière), plus proche d'un effet de
+seuil que l'asymétrie testée par ailleurs.
+
+Coefficient du terme quadratique (ln_iva_sq) : -1.8470
+P-value (erreurs-types HAC) : 0.0051
+R² ajusté (modèle linéaire) : 0.9880
+R² ajusté (modèle avec terme quadratique) : 0.9893
+
+Conclusion : le terme quadratique est significatif au seuil de 5% — la spécification log-linéaire imposée pourrait omettre une non-linéarité de niveau (par exemple des rendements décroissants de l'industrialisation). Ce résultat nuance la spécification retenue au chapitre 2 et mériterait d'être exploré plus avant (modèle à seuil, spline).

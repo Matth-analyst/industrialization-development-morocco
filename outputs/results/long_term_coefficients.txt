@@ -2,15 +2,21 @@
 COEFFICIENTS DE LONG TERME
 ================================================================================
 
-Dénominateur (1 - Σ retards de y): 0.246328
+Dénominateur (1 - Σ retards de y): -0.004969
 
- variable                  var_label  long_term_coefficient  p_value  significant_5pct
-   ln_iva  VA manufacturière (% PIB)              -1.692694 0.089843             False
-ln_credit       Crédit privé (% PIB)              -0.397003 0.091046             False
-   ln_dep Dépenses publiques (% PIB)              -2.837840 0.014203              True
-   ln_ide  IDE nets entrants (% PIB)               0.002283 0.958101             False
-  ln_tcer            TCER (2010=100)              -3.399278 0.017989              True
-   ln_ipc             IPC (2010=100)               0.960423 0.743849             False
+⚠️⚠️ AVERTISSEMENT: dénominateur quasi nul → la somme des coefficients des retards de y est très proche de 1. Les coefficients de long terme ci-dessous sont numériquement instables et ne doivent pas être interprétés comme des élasticités de long terme fiables. Voir outputs/results/bounds_test.txt: le test des bornes ne rejette pas H0 (pas de relation de cointégration établie), ce qui est cohérent avec cette instabilité.
+
+variable                  var_label  long_term_coefficient  p_value  significant_5pct
+  ln_iva  VA manufacturière (% PIB)              23.044676 0.491775             False
+  ln_dep Dépenses publiques (% PIB)              48.671782 0.050311             False
+  ln_ide  IDE nets entrants (% PIB)              -3.297720 0.019539              True
+ ln_tcer            TCER (2010=100)              -6.279408 0.870833             False
 
 ================================================================================
 Significativité: *** p<0.01, ** p<0.05, * p<0.10
+
+--------------------------------------------------------------------------------
+SIGNES ÉCONOMIQUEMENT CONTRE-INTUITIFS À DISCUTER DANS LE RAPPORT
+--------------------------------------------------------------------------------
+- IDE nets entrants (% PIB): coefficient de long terme = -3.2977 (signe négatif inattendu). l'IDE est généralement attendu positif via transfert de capital, technologie et emploi.
+  Ne pas laisser ce résultat sans commentaire: discuter les explications possibles (multicolinéarité résiduelle, instabilité d'échantillon, effet de composition, causalité inverse) plutôt que de l'ignorer.

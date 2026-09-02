@@ -1,0 +1,9 @@
+VIF en niveaux (comme au §3.3.2) vs. en différences premières :
+
+Variable     VIF (niveaux)   VIF (diff. 1ère)
+ln_iva                1.89               1.23
+ln_dep                1.60               1.36
+ln_ide                1.28               1.25
+ln_tcer               1.88               1.13
+
+Conclusion : la conclusion d'absence de multicolinéarité tient dans les deux cas (tous les VIF < 2). La remarque méthodologique sur la moindre fiabilité théorique du VIF calculé sur séries I(1) reste valable en principe, mais elle ne change ici aucune conclusion du rapport.

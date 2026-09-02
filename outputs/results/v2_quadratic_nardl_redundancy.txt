@@ -1,0 +1,15 @@
+Corrélation entre (ln_iva - moyenne)^2 et (iva_pos - iva_neg) : -0.612
+Modèle quadratique seul, OLS (sans HAC) : coef=-1.847, p=0.0516
+  (rappel rapport initial, avec HAC : coef=-1.85, p=0.005 -- résultat sensible au choix des erreurs-types)
+
+Modèle combiné (quadratique + iva_pos + iva_neg) -- matrice quasi rank-déficiente :
+ln_iva_sq    0.162413
+iva_pos     -1.444908
+iva_neg     -2.366745
+dtype: float64
+ln_iva_sq    0.892359
+iva_pos      0.007777
+iva_neg      0.010755
+dtype: float64
+
+Conclusion : corrélation de -0.61 entre les deux constructions -- pas une coïncidence mineure. Le terme quadratique et la décomposition NARDL positive/négative capturent en grande partie la même non-linéarité de la relation IVA->PIB sous deux paramétrisations différentes. Ils ne doivent pas être présentés comme deux résultats indépendants qui se corroborent (comme au §3.9.2 et au §3bis.8), et ne doivent compter que pour un seul test dans la famille corrigée en 3ter.1.

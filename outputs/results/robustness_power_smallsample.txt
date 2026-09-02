@@ -1,0 +1,26 @@
+================================================================================
+PUISSANCE DU TEST DES BORNES ET VALEURS CRITIQUES EN PETIT ÉCHANTILLON
+================================================================================
+
+Méthode : simulation Monte Carlo calibrée exactement sur n=33, k=4 (taille et dimension de notre échantillon effectif), plutôt que
+des valeurs de table citées de mémoire (Narayan, 2005) dont la
+reproduction exacte ne peut être garantie sans accès direct à la
+publication. Chaque réplication génère des marches aléatoires
+indépendantes (H0) ou une relation de cointégration vraie calibrée
+sur nos coefficients de long terme estimés (H1), puis calcule la
+statistique F du test des bornes exactement comme dans
+ardl_model_parsimonious.py::run_bounds_test.
+
+--- Valeurs critiques simulées sous H0 (5000 réplications, n=33, k=4) ---
+90% : 4.018   (borne asymptotique Pesaran et al. 2001 : 2.45)
+95% : 4.864   (borne asymptotique Pesaran et al. 2001 : 2.86)
+99% : 6.846   (borne asymptotique Pesaran et al. 2001 : 3.74)
+
+Notre F observé (ARDL(2,0), section 3.5) : 1.76
+Conclusion : F=1.76 reste sous la valeur critique simulée à 90% (4.02) comme sous la borne asymptotique (2.45). La conclusion d'absence de cointégration résiste donc au passage à des valeurs critiques calibrées sur la taille exacte de notre échantillon : ce n'est pas un artefact du choix de table.
+
+--- Puissance du test sous une relation de cointégration vraie (3000 réplications, n=33) ---
+Coefficients de long terme simulés : proches de ceux estimés en section 3.6.2 (23.0, 48.7, -3.3, -6.3), force de rappel ECT = -0.6
+Puissance estimée à 5% : 36.2%
+
+Interprétation : si une relation de cointégration de cette forme et de cette ampleur existait réellement dans les données marocaines, le test des bornes aurait environ 36% de chances de la détecter sur un échantillon de 33 observations. Cette puissance est faible : l'absence de rejet de H0 ne peut donc pas être interprétée comme une preuve solide d'absence de cointégration — elle est également compatible avec une puissance statistique insuffisante pour la détecter. Ce point nuance, sans l'annuler, la conclusion de la section 3.5 : nous ne pouvons pas distinguer, avec ce seul test, 'pas de relation de long terme' de 'relation trop difficile à détecter sur 33 observations'.
